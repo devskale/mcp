@@ -58,5 +58,30 @@ def fetch_url(url: str) -> dict:
     except requests.exceptions.RequestException as e:
         raise Exception(f"Failed to fetch URL: {str(e)}")
 
+@mcp.tool
+def fetch_google_search(query: str, num_results: int = 10, domain: str = "at") -> dict:
+    """
+    Fetch Google search results using the w3m API.
+    
+    Args:
+        query (str): The search query. eg "Elon Musk"
+        num_results (int): The number of search results to return. eg 10.
+        domain (str): The domain to search in. eg at, de, com.
+    
+    Returns:
+        dict: The JSON response from the API containing the search results.
+    """
+    try:
+        api_url = f"https://amd1.mooo.com/api/w3m_google?query={query}&num_results={num_results}&domain={domain}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {os.getenv('BEARER_TOKEN')}"
+        }
+        response = requests.get(api_url, headers=headers)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Failed to fetch Google search results: {str(e)}")
+
 if __name__ == "__main__":
     mcp.run()
