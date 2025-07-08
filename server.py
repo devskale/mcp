@@ -8,7 +8,7 @@ load_dotenv()
 mcp = FastMCP("SimpleAPI")
 
 @mcp.tool
-def fetch_news(topic: str) -> dict:
+def fetch_news_headlines(topic: str) -> dict:
     """
     Fetch news articles related to a specific topic from the API.
     
